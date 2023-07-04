@@ -4,37 +4,31 @@ import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/features/authentication/email_screen.dart';
 import 'package:tictok_clone/features/authentication/widgets/form_button.dart';
 
-class UsernameScreen extends StatefulWidget {
-  const UsernameScreen({super.key});
+class BirthdayScreen extends StatefulWidget {
+  const BirthdayScreen({super.key});
 
   @override
-  State<UsernameScreen> createState() => _UsernameScreenState();
+  State<BirthdayScreen> createState() => _BirthdayScreenState();
 }
 
-class _UsernameScreenState extends State<UsernameScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+class _BirthdayScreenState extends State<BirthdayScreen> {
+  final TextEditingController _birthdayController = TextEditingController();
 
-  String _username = "";
+  DateTime date = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-
-    _usernameController.addListener(() {
-      setState(() {
-        _username = _usernameController.text;
-      });
-    });
+    print(date);
   }
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _birthdayController.dispose();
     super.dispose();
   }
 
   void _onNextTap() {
-    if (_username.isEmpty) return;
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const EmailScreen(),
@@ -57,7 +51,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
             children: [
               Gaps.v40,
               const Text(
-                "Create username",
+                "When's your birthday?",
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
@@ -65,7 +59,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
               ),
               Gaps.v8,
               const Text(
-                "You can always change this later.",
+                "Your birthday won't be shown publicly.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
                   color: Colors.black54,
@@ -73,9 +67,9 @@ class _UsernameScreenState extends State<UsernameScreen> {
               ),
               Gaps.v16,
               TextField(
-                controller: _usernameController,
+                enabled: false,
+                controller: _birthdayController,
                 decoration: InputDecoration(
-                  hintText: "Username",
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400,
@@ -91,8 +85,11 @@ class _UsernameScreenState extends State<UsernameScreen> {
               ),
               Gaps.v28,
               GestureDetector(
-                  onTap: _onNextTap,
-                  child: FormButton(disabled: _username.isEmpty)),
+                onTap: _onNextTap,
+                child: const FormButton(
+                  disabled: false,
+                ),
+              ),
             ],
           ),
         ));
