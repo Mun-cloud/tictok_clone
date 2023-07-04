@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/features/authentication/widgets/form_button.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
@@ -10,32 +11,50 @@ class EmailScreen extends StatefulWidget {
 }
 
 class _EmailScreenState extends State<EmailScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
-  String _username = "";
+  String _email = "";
 
   @override
   void initState() {
     super.initState();
 
-    _usernameController.addListener(() {
+    _emailController.addListener(() {
       setState(() {
-        _username = _usernameController.text;
+        _email = _emailController.text;
       });
     });
   }
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  String? _isEmailValid() {
+    if (_email.isEmpty) return null;
+    final regExp = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (!regExp.hasMatch(_email)) {
+      return "Email not valid";
+    }
+    return null;
+  }
+
+  void _onScaffoldTap() {
+    FocusScope.of(context).unfocus();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Sign up"),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.size36,
+    return GestureDetector(
+      onTap: _onScaffoldTap,
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text("Sign up"),
           ),
-          child: Padding(
+          body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size36,
             ),
@@ -44,25 +63,20 @@ class _EmailScreenState extends State<EmailScreen> {
               children: [
                 Gaps.v40,
                 const Text(
-                  "Create username",
+                  "What is your email",
                   style: TextStyle(
                     fontSize: Sizes.size24,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Gaps.v8,
-                const Text(
-                  "You can always change this later.",
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.black54,
-                  ),
-                ),
                 Gaps.v16,
                 TextField(
-                  controller: _usernameController,
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
                   decoration: InputDecoration(
-                    hintText: "Username",
+                    hintText: "Email",
+                    errorText: _isEmailValid(),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.grey.shade400,
@@ -77,32 +91,10 @@ class _EmailScreenState extends State<EmailScreen> {
                   cursorColor: Theme.of(context).primaryColor,
                 ),
                 Gaps.v28,
-                FractionallySizedBox(
-                  widthFactor: 1,
-                  child: AnimatedContainer(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Sizes.size16,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Sizes.size5),
-                      color: _username.isEmpty
-                          ? Colors.grey.shade300
-                          : Theme.of(context).primaryColor,
-                    ),
-                    duration: const Duration(milliseconds: 500),
-                    child: const Text(
-                      'Next',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
+                FormButton(disabled: _email.isEmpty),
               ],
             ),
-          ),
-        ));
+          )),
+    );
   }
 }
