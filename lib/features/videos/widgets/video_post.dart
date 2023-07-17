@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/features/videos/widgets/video_button.dart';
+import 'package:tictok_clone/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+import 'video_subscribe_text.dart';
 
 class VideoPost extends StatefulWidget {
   final Function onVideoFinished;
@@ -65,7 +69,9 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !_isPause &&
+        !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
   }
@@ -81,6 +87,19 @@ class _VideoPostState extends State<VideoPost>
     setState(() {
       _isPause = !_isPause;
     });
+  }
+
+  void _onCommentTap(BuildContext context) async {
+    if (_videoPlayerController.value.isPlaying) {
+      _onTogglePause();
+    }
+    await showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => const VideoComments(),
+    );
+    _onTogglePause();
   }
 
   @override
@@ -125,8 +144,9 @@ class _VideoPostState extends State<VideoPost>
             ),
           ),
           const Positioned(
-            bottom: 30,
-            left: 30,
+            bottom: 20,
+            left: 10,
+            right: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -139,16 +159,39 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
                 Gaps.v10,
-                Text(
-                  "This is my house in Thailand!!!",
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.white,
-                  ),
-                )
+                VideoSubscribeText(
+                  subscribe:
+                      "This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! ",
+                ),
               ],
             ),
-          )
+          ),
+          Positioned(
+              bottom: 20,
+              right: 10,
+              child: Column(
+                children: [
+                  const CircleAvatar(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    radius: 25,
+                    foregroundImage: NetworkImage(
+                        "https://avatars.githubusercontent.com/u/85348363?v=4"),
+                  ),
+                  Gaps.v24,
+                  const VideoButton(
+                      icon: FontAwesomeIcons.solidHeart, text: "2.9M"),
+                  Gaps.v24,
+                  GestureDetector(
+                    onTap: () => _onCommentTap(context),
+                    child: const VideoButton(
+                        icon: FontAwesomeIcons.solidComment, text: "33k"),
+                  ),
+                  Gaps.v24,
+                  const VideoButton(
+                      icon: FontAwesomeIcons.share, text: "Share"),
+                ],
+              ))
         ],
       ),
     );

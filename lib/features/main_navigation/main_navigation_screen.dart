@@ -52,6 +52,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 터치 키보드 출현(?) 따른 body값 변화 방지
+      resizeToAvoidBottomInset: false,
+      backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
       body: screens.elementAt(_selectedIndex),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
