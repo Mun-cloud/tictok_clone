@@ -93,13 +93,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               ),
               itemBuilder: (context, index) => Column(
                 children: [
+                  // border radius
                   Container(
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(Sizes.size4),
                     ),
+                    // 비율 설정
                     child: AspectRatio(
                       aspectRatio: 9 / 16,
+                      // 로컬 이미지에서 동적 이미지 로딩 완료 후 변환(loader 설정)
                       child: FadeInImage.assetNetwork(
                         fit: BoxFit.cover,
                         placeholder: "assets/images/placeholder.jpg",

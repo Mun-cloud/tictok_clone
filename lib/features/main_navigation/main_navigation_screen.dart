@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/features/discover/discover_screen.dart';
+import 'package:tictok_clone/features/inbox/inbox_screen.dart';
 import 'package:tictok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tictok_clone/features/videos/video_timeline_screen.dart';
 
@@ -16,22 +17,6 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 1;
-
-  final screens = [
-    const Center(
-      child: VideoTimelineScreen(),
-    ),
-    const Center(
-      child: Text("Home"),
-    ),
-    Container(),
-    const Center(
-      child: Text("Home"),
-    ),
-    const Center(
-      child: Text("Search"),
-    )
-  ];
 
   void _onTap(int index) {
     setState(() {
@@ -69,7 +54,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 3,
-            child: Container(),
+            child: const InboxScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,
