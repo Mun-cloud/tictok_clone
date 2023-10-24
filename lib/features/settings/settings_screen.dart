@@ -79,25 +79,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         ListTile(
           title: const Text(
-            "Log out",
+            "Log out (Android / Ios)",
           ),
           textColor: Colors.red,
           onTap: () {
-            showCupertinoDialog(
+            showCupertinoModalPopup(
               context: context,
-              builder: (context) => CupertinoAlertDialog(
+              builder: (context) => CupertinoActionSheet(
                 title: const Text('Are you sure?'),
-                content: const Text('Please dont go'),
+                message: const Text("Please dont go"),
                 actions: [
-                  CupertinoDialogAction(
-                    // 한 페이지가 제일 앞단에 라우팅 된 상태로 Navigator.of(context).pop()함
+                  CupertinoActionSheetAction(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text("No"),
+                    isDefaultAction: true,
+                    child: const Text("Not log out"),
                   ),
-                  CupertinoDialogAction(
+                  CupertinoActionSheetAction(
                     onPressed: () => Navigator.of(context).pop(),
                     isDestructiveAction: true,
-                    child: const Text("Yes"),
+                    child: const Text("Yes please"),
                   ),
                 ],
               ),
