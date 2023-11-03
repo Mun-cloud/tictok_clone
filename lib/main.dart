@@ -48,3 +48,30 @@ class TikTokApp extends StatelessWidget {
     );
   }
 }
+
+// class MainNavigationScreen extends StatelessWidget {
+//   const MainNavigationScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final size = MediaQuery.of(context).size;
+//     return Scaffold(
+//       body: SizedBox(
+//         width: size.width / 2,
+//         child: LayoutBuilder(
+//           builder: (context, constraints) => Container(
+//             width: constraints.maxWidth,
+//             height: constraints.maxHeight,
+//             color: Colors.teal,
+//             child: Center(
+//               child: Text(
+//                 "${size.width} ${constraints.maxWidth}",
+//                 style: const TextStyle(color: Colors.white, fontSize: 98),
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictok_clone/constants/breakpoints.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 
@@ -44,12 +46,23 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: const HeaderSearchBar(),
+          title: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoint.sm,
+            ),
+            child: CupertinoSearchTextField(
+              controller: _textEditingController,
+              onChanged: _onSearchChanged,
+              onSubmitted: _onSearchSubmitted,
+            ),
+          ),
           elevation: 1,
           bottom: TabBar(
             onTap: _onTabTap,
@@ -85,76 +98,79 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               ),
               itemCount: 20,
               // 그리드 설정
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: width > Breakpoint.lg ? 5 : 2,
                 crossAxisSpacing: Sizes.size10,
                 mainAxisSpacing: Sizes.size10,
                 childAspectRatio: 9 / 20,
               ),
-              itemBuilder: (context, index) => Column(
-                children: [
-                  // border radius
-                  Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Sizes.size4),
-                    ),
-                    // 비율 설정
-                    child: AspectRatio(
-                      aspectRatio: 9 / 16,
-                      // 로컬 이미지에서 동적 이미지 로딩 완료 후 변환(loader 설정)
-                      child: FadeInImage.assetNetwork(
-                        fit: BoxFit.cover,
-                        placeholder: "assets/images/placeholder.jpg",
-                        image:
-                            "https://source.unsplash.com/random/200x${355 + index}",
+              itemBuilder: (context, index) => LayoutBuilder(
+                builder: (context, constrains) => Column(
+                  children: [
+                    // border radius
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Sizes.size4),
+                      ),
+                      // 비율 설정
+                      child: AspectRatio(
+                        aspectRatio: 9 / 16,
+                        // 로컬 이미지에서 동적 이미지 로딩 완료 후 변환(loader 설정)
+                        child: FadeInImage.assetNetwork(
+                          fit: BoxFit.cover,
+                          placeholder: "assets/images/placeholder.jpg",
+                          image:
+                              "https://source.unsplash.com/random/200x${355 + index}",
+                        ),
                       ),
                     ),
-                  ),
-                  Gaps.v10,
-                  const Text(
-                    'This is very long cpation for my tiktok that im upload just now currently',
-                    style: TextStyle(
-                      fontSize: Sizes.size16 + Sizes.size2,
-                      fontWeight: FontWeight.bold,
+                    Gaps.v10,
+                    Text(
+                      '${constrains.maxWidth} This is very long cpation for my tiktok that im upload just now currently',
+                      style: const TextStyle(
+                        fontSize: Sizes.size16 + Sizes.size2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Gaps.v8,
-                  DefaultTextStyle(
-                    style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.w600),
-                    child: Row(
-                      children: [
-                        const CircleAvatar(
-                          radius: 12,
-                          backgroundImage: NetworkImage(
-                              "https://avatars.githubusercontent.com/u/85348363?v=4"),
+                    Gaps.v8,
+                    if (constrains.maxWidth < 200 || constrains.maxWidth > 250)
+                      DefaultTextStyle(
+                        style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontWeight: FontWeight.w600),
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 12,
+                              backgroundImage: NetworkImage(
+                                  "https://avatars.githubusercontent.com/u/85348363?v=4"),
+                            ),
+                            Gaps.h4,
+                            const Expanded(
+                              child: Text(
+                                "My avatar is going to be very long",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Gaps.h4,
+                            FaIcon(
+                              FontAwesomeIcons.heart,
+                              size: Sizes.size16,
+                              color: Colors.grey.shade600,
+                            ),
+                            Gaps.h2,
+                            const Text(
+                              "2.5M",
+                            )
+                          ],
                         ),
-                        Gaps.h4,
-                        const Expanded(
-                          child: Text(
-                            "My avatar is going to be very long",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Gaps.h4,
-                        FaIcon(
-                          FontAwesomeIcons.heart,
-                          size: Sizes.size16,
-                          color: Colors.grey.shade600,
-                        ),
-                        Gaps.h2,
-                        const Text(
-                          "2.5M",
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                      ),
+                  ],
+                ),
               ),
             ),
             for (var tab in tabs.skip(1))
