@@ -6,6 +6,7 @@ import 'package:tictok_clone/features/inbox/inbox_screen.dart';
 import 'package:tictok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tictok_clone/features/users/user_profile_screen.dart';
 import 'package:tictok_clone/features/videos/video_timeline_screen.dart';
+import 'package:tictok_clone/utils.dart';
 
 import 'widgets/post_video_button.dart';
 
@@ -38,6 +39,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     return Scaffold(
       // 터치 키보드 출현(?) 따른 body값 변화 방지
       resizeToAvoidBottomInset: false,
@@ -64,7 +66,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: _selectedIndex == 0 ? Colors.black : Colors.white,
+        color: _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(
