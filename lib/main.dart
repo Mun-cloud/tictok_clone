@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tictok_clone/features/discover/discover_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // 각 위젯들(회전 등)을 확실히 초기화 시켜줌
@@ -27,6 +27,7 @@ class TikTokApp extends StatelessWidget {
       title: 'TikTok Clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
+          useMaterial3: true,
           brightness: Brightness.light,
           scaffoldBackgroundColor: Colors.white,
           splashColor: Colors.transparent,
@@ -39,6 +40,7 @@ class TikTokApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             foregroundColor: Colors.black,
             backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
             elevation: 0,
             titleTextStyle: TextStyle(
               color: Colors.black,
@@ -53,23 +55,33 @@ class TikTokApp extends StatelessWidget {
           ),
           listTileTheme: const ListTileThemeData(iconColor: Colors.black)),
       darkTheme: ThemeData(
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: Color(0xFFE9435A),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
+        ),
+        tabBarTheme: TabBarTheme(
+          indicatorColor: Colors.white,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.grey.shade700,
+        ),
+        textTheme: Typography.whiteMountainView,
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.black,
+        primaryColor: const Color(0xFFE9435A),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade900,
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey.shade900,
+          surfaceTintColor: Colors.grey.shade900,
+          actionsIconTheme: IconThemeData(
+            color: Colors.grey.shade100,
           ),
-          tabBarTheme: const TabBarTheme(
-            indicatorColor: Colors.white,
-          ),
-          textTheme: Typography.whiteMountainView,
-          brightness: Brightness.dark,
-          scaffoldBackgroundColor: Colors.black,
-          primaryColor: const Color(0xFFE9435A),
-          bottomAppBarTheme: BottomAppBarTheme(
-            color: Colors.grey.shade900,
-          ),
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.grey.shade900,
-          )),
-      home: const MainNavigationScreen(),
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.grey.shade100,
+        ),
+      ),
+      home: const DiscoverScreen(),
     );
   }
 }
