@@ -1,0 +1,3 @@
+arb-dir: lib/intl
+template-arb-file: intl_en.arb
+output-localiztion-file: intl_generated.dart

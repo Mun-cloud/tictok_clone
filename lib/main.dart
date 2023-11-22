@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/features/discover/discover_screen.dart';
+import 'package:tictok_clone/features/authentication/sign_up_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // 각 위젯들(회전 등)을 확실히 초기화 시켜줌
@@ -25,6 +26,9 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       title: 'TikTok Clone',
+      locale: const Locale("ko"),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       themeMode: ThemeMode.system,
       theme: ThemeData(
           useMaterial3: true,
@@ -81,7 +85,7 @@ class TikTokApp extends StatelessWidget {
           color: Colors.grey.shade100,
         ),
       ),
-      home: const DiscoverScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
