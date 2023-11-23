@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/generated/l10n.dart';
 import 'package:tictok_clone/utils.dart';
 
 class VideoComments extends StatefulWidget {
@@ -55,7 +56,7 @@ class _VideoCommentsState extends State<VideoComments> {
           backgroundColor: isDark ? null : Colors.grey.shade50,
           // 뒤로가기 버튼 유무
           automaticallyImplyLeading: false,
-          title: const Text("22796 comments"),
+          title: Text(S.of(context).commentTitle(0, 0)),
           // actions에 아이콘을 넣으면 자동 우측 정렬되어 표시됨
           actions: [
             IconButton(
