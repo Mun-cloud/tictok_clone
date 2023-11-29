@@ -10,7 +10,8 @@ import 'package:tictok_clone/generated/l10n.dart';
 import 'package:tictok_clone/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = "/";
+  static String routeURL = "/";
+  static const routeName = "signUp";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
@@ -18,7 +19,8 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
-    context.push(UsernameScreen.routeName);
+    // context.push('/users/taeho?show=likes');
+    context.pushNamed(UsernameScreen.routeName);
     // Navigator.of(context).push(
     //   PageRouteBuilder(
     //     reverseTransitionDuration: const Duration(seconds: 1),
