@@ -1,34 +1,13 @@
 import 'package:go_router/go_router.dart';
-import 'package:tictok_clone/features/authentication/email_screen.dart';
-import 'package:tictok_clone/features/authentication/sign_up_screen.dart';
-import 'package:tictok_clone/features/authentication/username_screen.dart';
+import 'package:tictok_clone/features/videos/video_recording_screen.dart';
 
 final router = GoRouter(
   routes: [
     GoRoute(
-      name: SignUpScreen.routeName,
-      path: SignUpScreen.routeURL,
-      builder: (context, state) => const SignUpScreen(),
-      routes: [
-        GoRoute(
-          name: UsernameScreen.routeName,
-          path: UsernameScreen.routeUrl,
-          builder: (context, state) => const UsernameScreen(),
-          routes: [
-            GoRoute(
-              path: EmailScreen.routeUrl,
-              name: EmailScreen.routeName,
-              builder: (context, state) {
-                final args = state.extra as EmailScreenArgs;
-                return EmailScreen(
-                  username: args.username,
-                );
-              },
-            ),
-          ],
-        ),
-      ],
+      path: "/",
+      builder: (context, state) => const VideoRecordingScreen(),
     ),
+
     // GoRoute(
     //   path: LoginScreen.routeName,
     //   builder: (context, state) => const LoginScreen(),
