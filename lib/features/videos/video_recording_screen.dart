@@ -61,6 +61,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     _flashMode = _cameraController.value.flashMode;
   }
 
+  // 앱이 외부로 빠지는 경우를 감지하는 함수 (카메라 dispose를 위해 구현)
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     if (!_hasPermission) return;

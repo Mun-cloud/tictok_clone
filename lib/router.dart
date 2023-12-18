@@ -1,39 +1,24 @@
 import 'package:go_router/go_router.dart';
-import 'package:tictok_clone/features/videos/video_recording_screen.dart';
+import 'package:tictok_clone/features/authentication/login_screen.dart';
+import 'package:tictok_clone/features/authentication/sign_up_screen.dart';
+import 'package:tictok_clone/features/onboarding/interests_screen.dart';
 
 final router = GoRouter(
   routes: [
     GoRoute(
-      path: "/",
-      builder: (context, state) => const VideoRecordingScreen(),
+      name: SignUpScreen.routeName,
+      path: SignUpScreen.routeURL,
+      builder: (context, state) => const SignUpScreen(),
     ),
-
-    // GoRoute(
-    //   path: LoginScreen.routeName,
-    //   builder: (context, state) => const LoginScreen(),
-    // ),
-    // GoRoute(
-    //   path: UsernameScreen.routeName,
-    //   pageBuilder: (context, state) {
-    //     return CustomTransitionPage(
-    //       child: const UsernameScreen(),
-    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    //         return FadeTransition(
-    //           opacity: animation,
-    //           child: ScaleTransition(scale: animation, child: child),
-    //         );
-    //       },
-    //     );
-    //   },
-    // ),
-
-    // GoRoute(
-    //   path: '/users/:username',
-    //   builder: (context, state) {
-    //     final username = state.params["username"];
-    //     final tab = state.queryParams["show"];
-    //     return UserProfileScreen(username: username!, tab: tab!);
-    //   },
-    // )
+    GoRoute(
+      name: LoginScreen.routeName,
+      path: LoginScreen.routeURL,
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      name: InterestsScreen.routeName,
+      path: InterestsScreen.routeURL,
+      builder: (context, state) => const InterestsScreen(),
+    )
   ],
 );
