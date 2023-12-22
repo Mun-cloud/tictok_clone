@@ -49,7 +49,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    print(Localizations.localeOf(context));
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(

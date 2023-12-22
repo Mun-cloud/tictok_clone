@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:tictok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/features/videos/widgets/video_button.dart';
@@ -27,7 +29,9 @@ class VideoPost extends StatefulWidget {
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
   late final VideoPlayerController _videoPlayerController;
+
   bool _isPause = false;
+
   final Duration _animationDuration = const Duration(milliseconds: 200);
   late final AnimationController _animationController;
 
@@ -172,6 +176,21 @@ class _VideoPostState extends State<VideoPost>
                       "This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! ",
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            left: 20,
+            top: 40,
+            child: IconButton(
+              icon: FaIcon(
+                context.watch<VideoConfig>().isMuted
+                    ? FontAwesomeIcons.volumeOff
+                    : FontAwesomeIcons.volumeHigh,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                context.read<VideoConfig>().toggleIsMuted();
+              },
             ),
           ),
           Positioned(
