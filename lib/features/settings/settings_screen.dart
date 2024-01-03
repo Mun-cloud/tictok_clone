@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tictok_clone/common/widgets/video_config/video_config.dart';
+import 'package:tictok_clone/features/videos/view_models/palyback_config_vm.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -30,20 +30,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           // ChangeNotifier를 AnimatedBuilder로 구독하지 않으면 초기값만 호출되고 변경사항에 따른 rebuild가 일어나지 않는다.
-          // 또한 이 방식을 쓰면 필요한 부분만 rebuild가 일어난다. inheritWidget을 쓰면 전체 앱을 다시 rebuild하게된다.
+          // 또한 이 방식을 쓰면 필요한 부분만` rebuild가 일어난다. inheritWidget을 쓰면 전체 앱을 다시 rebuild하게된다.
           SwitchListTile.adaptive(
-            value: context.watch<VideoConfig>().isMuted,
-            onChanged: (value) {
-              context.read<VideoConfig>().toggleIsMuted();
-            },
-            title: const Text("Auto Mute"),
+            value: context.watch<PlaybackConfigViewModel>().muted,
+            onChanged: (value) =>
+                context.read<PlaybackConfigViewModel>().setMuted(value),
+            title: const Text("Mute video"),
             subtitle: const Text("Videos will be muted by default."),
           ),
+          SwitchListTile.adaptive(
+            value: context.watch<PlaybackConfigViewModel>().autoplay,
+            onChanged: (value) =>
+                context.read<PlaybackConfigViewModel>().setAutopaly(value),
+            title: const Text("Autoplay"),
+            subtitle: const Text("Videos will start playing automatically."),
+          ),
           Switch.adaptive(
-              value: _notifications, onChanged: _onNotificationsChanged),
+            value: _notifications,
+            onChanged: _onNotificationsChanged,
+          ),
           CupertinoSwitch(
-              value: _notifications, onChanged: _onNotificationsChanged),
-          Switch(value: _notifications, onChanged: _onNotificationsChanged),
+            value: _notifications,
+            onChanged: _onNotificationsChanged,
+          ),
+          Switch(
+            value: _notifications,
+            onChanged: _onNotificationsChanged,
+          ),
           SwitchListTile(
             value: _notifications,
             onChanged: _onNotificationsChanged,

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tictok_clone/common/widgets/main_navigation/widgets/post_video_button.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/features/discover/discover_screen.dart';
 import 'package:tictok_clone/features/inbox/inbox_screen.dart';
 import 'package:tictok_clone/common/widgets/main_navigation/widgets/nav_tab.dart';
 import 'package:tictok_clone/features/users/user_profile_screen.dart';
-import 'package:tictok_clone/features/videos/video_recording_screen.dart';
-import 'package:tictok_clone/features/videos/video_timeline_screen.dart';
+import 'package:tictok_clone/features/videos/views/video_recording_screen.dart';
+import 'package:tictok_clone/features/videos/views/video_timeline_screen.dart';
 import 'package:tictok_clone/utils.dart';
-
-import 'widgets/post_video_button.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   static const String routeName = "mainNavigation";
