@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/features/videos/repose/video_playback_config_repo.dart';
@@ -25,15 +25,15 @@ void main() async {
   // 위 코드를 활용해서 repo를 초기화
   final repository = VideoPlaybackConfigRepository(preferences);
 
-  runApp(MultiProvider(
-    providers: [
-      // 또한 마찬가지로 repo를 이용해 view model을 초기화함
-      ChangeNotifierProvider(
-        create: (context) => PlaybackConfigViewModel(repository),
-      )
-    ],
-    child: const TikTokApp(),
-  ));
+  runApp(
+    ProviderScope(
+      overrides: [
+        playbackConfigProvider
+            .overrideWith(() => PlaybackConfigViewModel(repository)),
+      ],
+      child: const TikTokApp(),
+    ),
+  );
 }
 
 class TikTokApp extends StatelessWidget {

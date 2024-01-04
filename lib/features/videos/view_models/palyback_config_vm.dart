@@ -1,29 +1,38 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/features/videos/models/playback_config_model.dart';
 import 'package:tictok_clone/features/videos/repose/video_playback_config_repo.dart';
 
-class PlaybackConfigViewModel extends ChangeNotifier {
+class PlaybackConfigViewModel extends Notifier<PlaybackConfigModal> {
   final VideoPlaybackConfigRepository _repository;
-
-  late final PlaybackConfigModal _model = PlaybackConfigModal(
-    muted: _repository.isMuted(),
-    autoplay: _repository.isAutoplay(),
-  );
 
   PlaybackConfigViewModel(this._repository);
 
-  bool get muted => _model.muted;
-  bool get autoplay => _model.autoplay;
-
   void setMuted(bool value) {
     _repository.setMuted(value);
-    _model.muted = value;
-    notifyListeners();
+    state = PlaybackConfigModal(
+      muted: value,
+      autoplay: state.autoplay,
+    );
   }
 
   void setAutopaly(bool value) {
     _repository.setAutoplay(value);
-    _model.autoplay = value;
-    notifyListeners();
+    state = PlaybackConfigModal(
+      muted: state.muted,
+      autoplay: value,
+    );
+  }
+
+  @override
+  PlaybackConfigModal build() {
+    return PlaybackConfigModal(
+      muted: _repository.isMuted(),
+      autoplay: _repository.isAutoplay(),
+    );
   }
 }
+
+// NotifierProvider<불러올 클래스, 반환할 클래스>
+final playbackConfigProvider =
+    NotifierProvider<PlaybackConfigViewModel, PlaybackConfigModal>(
+        () => throw UnimplementedError());

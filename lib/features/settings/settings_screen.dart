@@ -1,28 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/features/videos/view_models/palyback_config_vm.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notifications = false;
-
-  void _onNotificationsChanged(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notifications = newValue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -32,43 +18,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // ChangeNotifier를 AnimatedBuilder로 구독하지 않으면 초기값만 호출되고 변경사항에 따른 rebuild가 일어나지 않는다.
           // 또한 이 방식을 쓰면 필요한 부분만` rebuild가 일어난다. inheritWidget을 쓰면 전체 앱을 다시 rebuild하게된다.
           SwitchListTile.adaptive(
-            value: context.watch<PlaybackConfigViewModel>().muted,
-            onChanged: (value) =>
-                context.read<PlaybackConfigViewModel>().setMuted(value),
+            value: ref.watch(playbackConfigProvider).muted,
+            onChanged: (value) => {
+              ref.read(playbackConfigProvider.notifier).setMuted(value),
+            },
             title: const Text("Mute video"),
             subtitle: const Text("Videos will be muted by default."),
           ),
           SwitchListTile.adaptive(
-            value: context.watch<PlaybackConfigViewModel>().autoplay,
-            onChanged: (value) =>
-                context.read<PlaybackConfigViewModel>().setAutopaly(value),
+            value: ref.watch(playbackConfigProvider).autoplay,
+            onChanged: (value) => {
+              ref.read(playbackConfigProvider.notifier).setAutopaly(value),
+            },
             title: const Text("Autoplay"),
             subtitle: const Text("Videos will start playing automatically."),
           ),
           Switch.adaptive(
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
+            value: false,
+            onChanged: (value) {},
           ),
           CupertinoSwitch(
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
+            value: false,
+            onChanged: (value) {},
           ),
           Switch(
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
+            value: false,
+            onChanged: (value) {},
           ),
           SwitchListTile(
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
+            value: false,
+            onChanged: (value) {},
             title: const Text("Enable notification"),
           ),
           Checkbox(
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
+            value: false,
+            onChanged: (value) {},
           ),
           CheckboxListTile(
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
+            value: false,
+            onChanged: (value) {},
             title: const Text("Enable notifications"),
             activeColor: Colors.black,
           ),
@@ -83,15 +71,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               if (kDebugMode) {
                 print(date);
               }
-              if (!mounted) return;
               final time = await showTimePicker(
                   context: context, initialTime: TimeOfDay.now());
               if (kDebugMode) {
                 print(time);
               }
-              if (!mounted) {
-                return; // await문 안에서 context를 사용할 땐 마운트 여부를 확인해줘야 함.
-              }
+              // if (!mounted) {
+              //return; // await문 안에서 context를 사용할 땐 마운트 여부를 확인해줘야 함.
+              //}
               final booking = await showDateRangePicker(
                 context: context,
                 firstDate: DateTime(1980),
