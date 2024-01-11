@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "775448109729",
+    "project_id": "muncloud-tiktok",
+    "storage_bucket": "muncloud-tiktok.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775448109729:android:91037aa6228d68af6f06e0",
+        "android_client_info": {
+          "package_name": "com.example.tictok_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ0TifCnQpBtoxML75-40lRPnKv29Z1qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
