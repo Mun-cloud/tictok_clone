@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tictok_clone/features/authentication/repos/authentication-repo.dart';
 import 'package:tictok_clone/features/videos/view_models/palyback_config_vm.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -107,7 +109,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
             textColor: Colors.red,
             onTap: () {
-              showCupertinoModalPopup(
+              showCupertinoDialog(
                 context: context,
                 builder: (context) => CupertinoActionSheet(
                   title: const Text('Are you sure?'),
@@ -119,7 +121,10 @@ class SettingsScreen extends ConsumerWidget {
                       child: const Text("Not log out"),
                     ),
                     CupertinoActionSheetAction(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () {
+                        ref.read(authRepo).signOut();
+                        context.go('/');
+                      },
                       isDestructiveAction: true,
                       child: const Text("Yes please"),
                     ),
