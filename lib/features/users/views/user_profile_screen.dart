@@ -5,6 +5,7 @@ import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/features/settings/settings_screen.dart';
 import 'package:tictok_clone/features/users/view_models/users_view_model.dart';
+import 'package:tictok_clone/features/users/views/widgets/avatar.dart';
 import 'package:tictok_clone/features/users/views/widgets/persistent_tab_bar.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
@@ -64,7 +65,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         child: Column(
                           children: [
                             Gaps.v20,
-                            // Avatar(name: data.name),
+                            Avatar(name: data.name),
                             Gaps.v20,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

@@ -6,7 +6,8 @@ import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/features/discover/discover_screen.dart';
 import 'package:tictok_clone/features/inbox/inbox_screen.dart';
 import 'package:tictok_clone/common/widgets/main_navigation/widgets/nav_tab.dart';
-import 'package:tictok_clone/features/users/user_profile_screen.dart';
+import 'package:tictok_clone/features/users/views/user_profile_screen.dart';
+
 import 'package:tictok_clone/features/videos/views/video_recording_screen.dart';
 import 'package:tictok_clone/features/videos/views/video_timeline_screen.dart';
 import 'package:tictok_clone/utils.dart';

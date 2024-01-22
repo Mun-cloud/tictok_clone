@@ -12,17 +12,19 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
 
   @override
   FutureOr<UserProfileModel> build() async {
+    await Future.delayed(const Duration(seconds: 10));
+
     _usersRepository = ref.read(userRepo);
     _authenticationRepository = ref.read(authRepo);
 
     if (_authenticationRepository.isLoggedIn) {
       final profile = await _usersRepository
           .findProfile(_authenticationRepository.user!.uid);
-
       if (profile != null) {
         return UserProfileModel.fromJson(profile);
       }
     }
+
     return UserProfileModel.empty();
   }
 
@@ -30,7 +32,6 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
     if (credential.user == null) {
       throw Exception("Account not created");
     }
-
     state = const AsyncValue.loading();
     final profile = UserProfileModel(
       bio: "undefined",
@@ -45,4 +46,5 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
 }
 
 final usersProvider = AsyncNotifierProvider<UsersViewModel, UserProfileModel>(
-    () => UsersViewModel());
+  () => UsersViewModel(),
+);
