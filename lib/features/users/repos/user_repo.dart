@@ -21,7 +21,12 @@ class UserRepository {
   Future<void> uploadAvatar(File file, String name) async {
     // firebase에서 ref는 폴더의 개념. 아래 코드는 해당 영역을 지정한다.
     final fileRef = _storage.ref().child("avatars/$name");
-    await fileRef.putFile(file);
+
+    await fileRef.putFile(file, SettableMetadata(contentType: "image/jpeg"));
+  }
+
+  Future<void> updateUser(String uid, Map<String, dynamic> data) async {
+    await _db.collection("users").doc(uid).update(data);
   }
 }
 

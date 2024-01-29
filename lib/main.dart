@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/features/videos/repose/video_playback_config_repo.dart';
+import 'package:tictok_clone/features/videos/repos/video_playback_config_repo.dart';
 import 'package:tictok_clone/features/videos/view_models/palyback_config_vm.dart';
 import 'package:tictok_clone/firebase_options.dart';
 import 'package:tictok_clone/generated/l10n.dart';
