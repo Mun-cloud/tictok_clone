@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/features/videos/models/video_model.dart';
 import 'package:tictok_clone/features/videos/view_models/palyback_config_vm.dart';
 import 'package:tictok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tictok_clone/features/videos/views/widgets/video_comments.dart';
@@ -14,10 +15,14 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
+  final VideoModel videoData;
+
   final int index;
+
   const VideoPost({
     super.key,
     required this.onVideoFinished,
+    required this.videoData,
     required this.index,
   });
 
@@ -134,8 +139,9 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(
-                    color: Colors.black,
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
                   ),
           ),
           Positioned.fill(
@@ -165,7 +171,7 @@ class VideoPostState extends ConsumerState<VideoPost>
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 20,
             left: 10,
             right: 10,
@@ -173,18 +179,15 @@ class VideoPostState extends ConsumerState<VideoPost>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "@Taeho",
-                  style: TextStyle(
+                  "@${widget.videoData.creator}",
+                  style: const TextStyle(
                     fontSize: Sizes.size20,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Gaps.v10,
-                VideoSubscribeText(
-                  subscribe:
-                      "This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! This is my house in tailand!!! ",
-                ),
+                Text(widget.videoData.description),
               ],
             ),
           ),
@@ -206,23 +209,26 @@ class VideoPostState extends ConsumerState<VideoPost>
               right: 10,
               child: Column(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
                     radius: 25,
                     foregroundImage: NetworkImage(
-                        "https://avatars.githubusercontent.com/u/85348363?v=4"),
+                        "https://firebasestorage.googleapis.com/v0/b/muncloud-tiktok.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media&token=2da7a3ac-3611-4d40-a87b-245b5e7d8027&haha=${DateTime.now().toString()}"),
+                    child: Text(widget.videoData.creator),
                   ),
                   Gaps.v24,
                   VideoButton(
                       icon: FontAwesomeIcons.solidHeart,
-                      text: S.of(context).likeCount(5498424416854)),
+                      text: S.of(context).likeCount(widget.videoData.likes)),
                   Gaps.v24,
                   GestureDetector(
                     onTap: () => _onCommentTap(context),
                     child: VideoButton(
                         icon: FontAwesomeIcons.solidComment,
-                        text: S.of(context).commentCount(64546456)),
+                        text: S
+                            .of(context)
+                            .commentCount(widget.videoData.comments)),
                   ),
                   Gaps.v24,
                   const VideoButton(
